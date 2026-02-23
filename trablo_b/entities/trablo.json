@@ -1,0 +1,22 @@
+{
+    "format_version": "1.12.0",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "trablo:entity",
+            "is_spawnable": false,
+            "is_summonable": true
+        },
+        "components": {
+            "minecraft:physics": {},
+            "minecraft:nameable": {},
+            "minecraft:movement": {
+                "value": 0.25
+            },
+            "minecraft:behavior.random_stroll": {
+                "priority": 3,
+                "speed_multiplier": 0.8
+            },
+            "minecraft:movement.basic": {}
+        }
+    }
+}

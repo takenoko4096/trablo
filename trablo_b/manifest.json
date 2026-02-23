@@ -1,0 +1,18 @@
+{
+    "format_version": 2,
+    "header": {
+        "description": "trablo",
+        "name": "trablo",
+        "uuid": "e9e1f604-2cf3-4c7f-9fcc-cad58b23f9f6",
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 26, 1]
+    },
+    "modules": [
+        {
+            "type": "data",
+            "description": "",
+            "uuid": "5e7345b9-da90-49c2-8c6f-97c45a1bbe0b",
+            "version": [1, 0, 0]
+        }
+    ]
+}

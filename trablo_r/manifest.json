@@ -1,0 +1,18 @@
+{
+    "format_version": 1,
+    "header": {
+        "name": "trablo",
+        "description": "trablo",
+        "uuid": "665b1689-d029-4bdd-b8fb-96f77d97beff",
+        "min_engine_version": [1, 26, 1],
+        "version": [1, 0, 0]
+    },
+    "modules": [
+        {
+            "type": "resources",
+            "description": "",
+            "uuid": "b683953b-6ca4-450f-87a1-f78ee3ba518c",
+            "version": [1, 0, 0]
+        }
+    ]
+}

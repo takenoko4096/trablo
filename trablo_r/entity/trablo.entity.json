@@ -1,0 +1,20 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "trablo:entity",
+            "materials": {
+                "default": "entity"
+            },
+            "textures": {
+                "default": "textures/entity/trablo"
+            },
+            "geometry": {
+                "default": "geometry.trablo"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ]
+        }
+    }
+}
