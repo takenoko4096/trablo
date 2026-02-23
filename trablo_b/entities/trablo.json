@@ -8,15 +8,7 @@
         },
         "components": {
             "minecraft:physics": {},
-            "minecraft:nameable": {},
-            "minecraft:movement": {
-                "value": 0.25
-            },
-            "minecraft:behavior.random_stroll": {
-                "priority": 3,
-                "speed_multiplier": 0.8
-            },
-            "minecraft:movement.basic": {}
+            "minecraft:nameable": {}
         }
     }
 }
