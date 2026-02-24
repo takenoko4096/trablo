@@ -1,8 +1,8 @@
 {
     "format_version": 1,
     "header": {
-        "name": "trablo",
-        "description": "trablo",
+        "name": "トラブロ君(R)",
+        "description": "トラブロ君を追加するアドオン(リソースパック)",
         "uuid": "665b1689-d029-4bdd-b8fb-96f77d97beff",
         "min_engine_version": [1, 26, 1],
         "version": [1, 0, 0]

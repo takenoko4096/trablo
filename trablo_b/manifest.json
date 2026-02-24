@@ -1,8 +1,8 @@
 {
     "format_version": 2,
     "header": {
-        "description": "trablo",
-        "name": "trablo",
+        "name": "トラブロ君(B)",
+        "description": "トラブロ君を追加するアドオン(ビヘイビアパック)",
         "uuid": "e9e1f604-2cf3-4c7f-9fcc-cad58b23f9f6",
         "version": [1, 0, 0],
         "min_engine_version": [1, 26, 1]
