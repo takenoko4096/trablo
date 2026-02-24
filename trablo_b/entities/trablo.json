@@ -7,33 +7,50 @@
             "is_summonable": true,
             "is_experimental": false
         },
+        "component_groups": {
+            "brain": {
+                "minecraft:behavior.random_look_around": {
+                    "priority": 9
+                },
+                "minecraft:behavior.look_at_player": {
+                    "priority": 5,
+                    "look_distance": 4,
+                    "probability": 0.02
+                },
+                "minecraft:movement": {
+                    "value": 0.2
+                },
+                "minecraft:movement.basic": {},
+                "minecraft:navigation.generic": {},
+                "minecraft:behavior.random_stroll": {
+                    "priority": 4,
+                    "interval": 140
+                }
+            }
+        },
         "components": {
             "minecraft:physics": {},
             "minecraft:nameable": {},
-            "minecraft:behavior.random_look_around": {
-                "priority": 9
-            },
-            "minecraft:behavior.look_at_player": {
-                "priority": 5,
-                "look_distance": 4,
-                "probability": 0.02
-            },
             "minecraft:collision_box": {
                 "width": 0.75,
                 "height": 1.75
             },
             "minecraft:pushable": {
                 "is_pushable": true
+            }
+        },
+        "events": {
+            "trablo:enable_brain": {
+                "add": {
+                    "component_groups": ["brain"]
+                }
             },
-            "minecraft:movement": {
-                "value": 0.25
+            "trablo:disable_brain": {
+                "component_groups": ["brain"]
             },
-            "minecraft:movement.basic": {},
-            "minecraft:behavior.random_stroll": {
-                "priority": 4,
-                "interval": 140
-            },
-            "minecraft:navigation.generic": {}
+            "minecraft:entity_spawned": {
+                "trigger": "trablo:enable_brain"
+            }
         }
     }
 }
