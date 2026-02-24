@@ -1,0 +1,49 @@
+{
+    "format_version" : "1.26.1",
+	"animation_controllers" : {
+		"controller.animation.trablo.wave" : {
+			"initial_state" : "default",
+			"states" : {
+				"default" : {
+					"transitions" : [
+                        {
+                            "wave": "!query.is_on_ground"
+                        }
+					]
+				},
+                "wave": {
+                    "animations": [
+                        "wave"
+                    ],
+                    "transitions": [
+                        {
+                            "default": "query.is_on_ground"
+                        }
+                    ]
+                }
+			}
+		},
+        "controller.animation.trablo.walk" : {
+			"initial_state" : "default",
+			"states" : {
+				"default" : {
+					"transitions" : [
+                        {
+                            "walk": "query.is_moving"
+                        }
+					]
+				},
+                "walk": {
+                    "animations": [
+                        "walk"
+                    ],
+                    "transitions": [
+                        {
+                            "default": "!query.is_moving"
+                        }
+                    ]
+                }
+			}
+		}
+	}
+}

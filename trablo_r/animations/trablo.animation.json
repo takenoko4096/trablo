@@ -1,6 +1,45 @@
 {
-    "format_version": "1.8.0",
-    "animations": {
-        
-    }
+	"format_version": "1.26.1",
+	"animations": {
+		"animation.trablo.wave": {
+            "loop": true,
+			"animation_length": 0.5,
+			"bones": {
+				"bone": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.25": [90, 0, 0],
+						"0.5": [0, 0, 0]
+					}
+				},
+				"bone2": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.25": [90, 0, 0],
+						"0.5": [0, 0, 0]
+					}
+				}
+			}
+		},
+        "animation.trablo.walk": {
+			"loop": true,
+			"animation_length": 0.5,
+			"bones": {
+				"trident1": {
+					"rotation": {
+						"0.0": [90, -15, 90],
+						"0.25": [-90, -15, -90],
+						"0.5": [90, -15, 90]
+					}
+				},
+				"trident2": {
+					"rotation": {
+						"0.0": [-90, -15, -90],
+						"0.25": [90, -15, 90],
+						"0.5": [-90, -15, -90]
+					}
+				}
+			}
+		}
+	}
 }

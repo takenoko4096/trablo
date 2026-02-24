@@ -1,5 +1,5 @@
 {
-    "format_version": "1.10.0",
+    "format_version": "1.26.1",
     "minecraft:client_entity": {
         "description": {
             "identifier": "trablo:entity",
@@ -14,7 +14,19 @@
             },
             "render_controllers": [
                 "controller.render.default"
-            ]
+            ],
+            "animations": {
+                "wave_controller": "controller.animation.trablo.wave",
+                "wave": "animation.trablo.wave",
+                "walk_controller": "controller.animation.trablo.walk",
+                "walk": "animation.trablo.walk"
+            },
+            "scripts": {
+                "animate": [
+                    "wave_controller",
+                    "walk_controller"
+                ]
+            }
         }
     }
 }
