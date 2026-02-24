@@ -4,7 +4,7 @@
         "name": "トラブロ君(R)",
         "description": "トラブロ君を追加するアドオン(リソースパック)",
         "uuid": "665b1689-d029-4bdd-b8fb-96f77d97beff",
-        "min_engine_version": [1, 26, 1],
+        "min_engine_version": [1, 21, 100],
         "version": [1, 0, 0]
     },
     "modules": [
