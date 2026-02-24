@@ -31,8 +31,7 @@
             "minecraft:movement.basic": {},
             "minecraft:behavior.random_stroll": {
                 "priority": 4,
-                "interval": 140,
-                "speed_multiplier": 0.25
+                "interval": 140
             },
             "minecraft:navigation.generic": {}
         }
