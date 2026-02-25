@@ -2,16 +2,29 @@
 
 “奴”を追加するアドオン
 
-## summon
+## Usage
+
+### summon
 ```mcfunction
 summon trablo:entity
 ```
 
-## playanimation
+### animation
 ```mcfunction
 # wave
-playanimation animation.trablo.wave
+playanimation @n[type=trablo:entity] animation.trablo.wave
 
 # walk
-playanimation animation.trablo.walk
+playanimation @n[type=trablo:entity] animation.trablo.walk
+```
+
+### component groups
+
+#### brain
+```mcfunction
+# enable (default)
+event entity @n[type=trablo:entity] trablo:enable_brain
+
+# disable
+event entity @n[type=trablo:entity] trablo:disable_brain
 ```

@@ -46,7 +46,9 @@
                 }
             },
             "trablo:disable_brain": {
-                "component_groups": ["brain"]
+                "remove": {
+                    "component_groups": ["brain"]
+                }
             },
             "minecraft:entity_spawned": {
                 "trigger": "trablo:enable_brain"

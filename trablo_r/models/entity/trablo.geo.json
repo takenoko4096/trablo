@@ -52,7 +52,7 @@
 					]
 				},
 				{
-					"name": "bone",
+					"name": "handle1",
 					"parent": "lever1",
 					"pivot": [11, 22, -2],
 					"cubes": [
@@ -79,7 +79,7 @@
 					]
 				},
 				{
-					"name": "bone2",
+					"name": "handle2",
 					"parent": "lever2",
 					"pivot": [-11, 22, -2],
 					"cubes": [
