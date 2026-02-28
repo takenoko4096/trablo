@@ -5,7 +5,21 @@
             "identifier": "trablo:entity",
             "is_spawnable": false,
             "is_summonable": true,
-            "is_experimental": false
+            "is_experimental": false,
+            "properties": {
+                "trablo:ai": {
+                    "type": "bool",
+                    "default": false
+                },
+                "trablo:command_block": {
+                    "type": "enum",
+                    "values": [
+                        "impulse", "repeat", "chain"
+                    ],
+                    "default": "impulse",
+                    "client_sync": true
+                }
+            }
         },
         "component_groups": {
             "brain": {
@@ -40,18 +54,56 @@
             }
         },
         "events": {
-            "trablo:enable_brain": {
-                "add": {
-                    "component_groups": ["brain"]
-                }
-            },
-            "trablo:disable_brain": {
-                "remove": {
-                    "component_groups": ["brain"]
-                }
+            "trablo:toggle_ai": {
+                "sequence": [
+                    {
+                        "filters": {
+                            "test": "bool_property",
+                            "domain": "trablo:ai",
+                            "operator": "==",
+                            "value": false
+                        },
+                        "add": {
+                            "component_groups": ["brain"]
+                        }
+                    },
+                    {
+                        "filters": {
+                            "test": "bool_property",
+                            "domain": "trablo:ai",
+                            "operator": "==",
+                            "value": true
+                        },
+                        "remove": {
+                            "component_groups": ["brain"]
+                        }
+                    },
+                    {
+                        "filters": {
+                            "test": "has_component",
+                            "subject": "self",
+                            "operator": "!=",
+                            "value": "minecraft:navigation.generic"
+                        },
+                        "set_property": {
+                            "trablo:ai": false
+                        }
+                    },
+                    {
+                        "filters": {
+                            "test": "has_component",
+                            "subject": "self",
+                            "operator": "==",
+                            "value": "minecraft:navigation.generic"
+                        },
+                        "set_property": {
+                            "trablo:ai": true
+                        }
+                    }
+                ]
             },
             "minecraft:entity_spawned": {
-                "trigger": "trablo:enable_brain"
+                "trigger": "trablo:toggle_ai"
             }
         }
     }
