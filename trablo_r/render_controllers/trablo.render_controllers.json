@@ -1,0 +1,25 @@
+{
+    "format_version": "1.26.1",
+    "render_controllers": {
+        "controller.render.trablo": {
+            "arrays": {
+                "textures": {
+                    "Array.command_block": [
+                        "Texture.impulse",
+                        "Texture.repeat",
+                        "Texture.chain"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [
+                {
+                    "*": "Material.default"
+                }
+            ],
+            "textures": [
+                "Array.command_block[query.variant]"
+            ]
+        }
+    }
+}

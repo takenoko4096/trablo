@@ -7,13 +7,15 @@
                 "default": "entity"
             },
             "textures": {
-                "default": "textures/entity/trablo"
+                "impulse": "textures/entity/impulse",
+                "repeat": "textures/entity/repeat",
+                "chain": "textures/entity/chain"
             },
             "geometry": {
                 "default": "geometry.trablo"
             },
             "render_controllers": [
-                "controller.render.default"
+                "controller.render.trablo"
             ],
             "animations": {
                 "wave_controller": "controller.animation.trablo.wave",

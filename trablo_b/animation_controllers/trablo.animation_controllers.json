@@ -1,0 +1,78 @@
+{
+    "format_version" : "1.26.1",
+	"animation_controllers" : {
+		"controller.animation.trablo.ai" : {
+			"initial_state" : "default",
+			"states" : {
+				"default" : {
+					"transitions" : [
+                        {
+                            "ai": "query.property('trablo:ai')"
+                        }
+					]
+				},
+                "ai": {
+                    "on_entry": [
+                        "/tag @s add trablo:has_ai"
+                    ],
+                    "on_exit": [
+                        "/tag @s remove trablo:has_ai"
+                    ],
+                    "transitions": [
+                        {
+                            "default": "!query.property('trablo:ai')"
+                        }
+                    ]
+                }
+			}
+		},
+        "controller.animation.trablo.variant" : {
+			"initial_state" : "default",
+			"states" : {
+				"default" : {
+					"transitions" : [
+                        {
+                            "0": "query.variant == 0"
+                        },
+                        {
+                            "1": "query.variant == 1"
+                        },
+                        {
+                            "2": "query.variant == 2"
+                        }
+					]
+				},
+                "0": {
+                    "on_entry": [
+                        "/scoreboard players set @s trablo:variant 0"
+                    ],
+                    "transitions": [
+                        {
+                            "default": "query.variant != 0"
+                        }
+                    ]
+                },
+                "1": {
+                    "on_entry": [
+                        "/scoreboard players set @s trablo:variant 1"
+                    ],
+                    "transitions": [
+                        {
+                            "default": "query.variant != 1"
+                        }
+                    ]
+                },
+                "2": {
+                    "on_entry": [
+                        "/scoreboard players set @s trablo:variant 2"
+                    ],
+                    "transitions": [
+                        {
+                            "default": "query.variant != 2"
+                        }
+                    ]
+                }
+			}
+		}
+	}
+}

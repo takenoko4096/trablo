@@ -10,15 +10,16 @@
                 "trablo:ai": {
                     "type": "bool",
                     "default": false
-                },
-                "trablo:command_block": {
-                    "type": "enum",
-                    "values": [
-                        "impulse", "repeat", "chain"
-                    ],
-                    "default": "impulse",
-                    "client_sync": true
                 }
+            },
+            "animations": {
+                "ai": "controller.animation.trablo.ai",
+                "variant": "controller.animation.trablo.variant"
+            },
+            "scripts": {
+                "animate": [
+                    "ai", "variant"
+                ]
             }
         },
         "component_groups": {
@@ -39,6 +40,21 @@
                 "minecraft:behavior.random_stroll": {
                     "priority": 4,
                     "interval": 140
+                }
+            },
+            "impulse": {
+                "minecraft:variant": {
+                    "value": 0
+                }
+            },
+            "repeat": {
+                "minecraft:variant": {
+                    "value": 1
+                }
+            },
+            "chain": {
+                "minecraft:variant": {
+                    "value": 2
                 }
             }
         },
@@ -65,6 +81,9 @@
                         },
                         "add": {
                             "component_groups": ["brain"]
+                        },
+                        "set_property": {
+                            "trablo:ai": true
                         }
                     },
                     {
@@ -76,31 +95,36 @@
                         },
                         "remove": {
                             "component_groups": ["brain"]
-                        }
-                    },
-                    {
-                        "filters": {
-                            "test": "has_component",
-                            "subject": "self",
-                            "operator": "!=",
-                            "value": "minecraft:navigation.generic"
                         },
                         "set_property": {
                             "trablo:ai": false
                         }
-                    },
-                    {
-                        "filters": {
-                            "test": "has_component",
-                            "subject": "self",
-                            "operator": "==",
-                            "value": "minecraft:navigation.generic"
-                        },
-                        "set_property": {
-                            "trablo:ai": true
-                        }
                     }
                 ]
+            },
+            "trablo:impulse": {
+                "add": {
+                    "component_groups": ["impulse"]
+                },
+                "remove": {
+                    "component_groups": ["repeat", "chain"]
+                }
+            },
+            "trablo:repeat": {
+                "add": {
+                    "component_groups": ["repeat"]
+                },
+                "remove": {
+                    "component_groups": ["chain", "impulse"]
+                }
+            },
+            "trablo:chain": {
+                "add": {
+                    "component_groups": ["chain"]
+                },
+                "remove": {
+                    "component_groups": ["impulse", "repeat"]
+                }
             },
             "minecraft:entity_spawned": {
                 "trigger": "trablo:toggle_ai"
