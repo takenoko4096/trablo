@@ -1,4 +1,4 @@
-import fs, { WriteFileOptions } from "node:fs";
+import fs from "node:fs";
 import path from "node:path";
 
 export class RelativePathLoader {
@@ -13,7 +13,7 @@ export class RelativePathLoader {
     }
 
     public relative(string: string): Path {
-        return this.root.chain(string);
+        return this.root.concat(string);
     }
 
     public static ofCurrentDirectory(importMeta: ImportMeta): RelativePathLoader {
@@ -22,29 +22,26 @@ export class RelativePathLoader {
 }
 
 export class Path {
-    private readonly path: string;
+    private readonly directory: string;
 
-    private readonly parsed: path.ParsedPath;
+    private readonly name: string;
+
+    private readonly extention: string;
 
     private constructor(string: string) {
-        this.parsed = path.parse(string.replaceAll('/', Path.SEPARATOR_CHAR));
-        this.path = this.parsed.dir + Path.SEPARATOR_CHAR + this.parsed.base;
+        const parseResult = path.parse(string.replaceAll('/', Path.SEPARATOR_CHAR));
+
+        this.directory = parseResult.dir;
+        this.name = parseResult.name;
+        this.extention = parseResult.ext;
     }
 
-    public fileName(): string {
-        return this.parsed.base;
-    }
-
-    public nameOnly(): string {
-        return this.parsed.name;
-    }
-
-    public extentionOnly(): string {
-        return this.parsed.ext.slice(1);
-    }
-
-    public chain(...strings: string[]): Path {
+    public concat(...strings: string[]): Path {
         return new Path(path.join(this.toString(), ...strings));
+    }
+
+    public parent(): Path {
+        return new Path(this.directory);
     }
 
     public toFile(): File {
@@ -52,7 +49,7 @@ export class Path {
     }
 
     public toString(): string {
-        return this.path;
+        return this.directory + Path.SEPARATOR_CHAR + this.name + this.extention;
     }
 
     public static absolute(string: string): Path {
@@ -67,6 +64,10 @@ export class File {
 
     public constructor(path: Path) {
         this.path = path;
+    }
+
+    public getPath(): Path {
+        return this.path;
     }
 
     public exists(): boolean {
@@ -86,8 +87,9 @@ export class File {
         return !this.isFile();
     }
 
-    public create() {
+    public create(createParentDirectories: boolean = false) {
         if (!this.exists()) {
+            if (createParentDirectories) fs.mkdirSync(this.path.parent().toString(), { recursive: true });
             fs.writeFileSync(this.path.toString(), '', "utf-8");
         }
     }
@@ -119,19 +121,15 @@ export class File {
             });
 
             for (const file of files) {
-                const childSourceFile = new File(this.path.chain(file.name));
-                const childDestinationPath = destination.chain(file.name);
+                const childSourceFile = new File(this.path.concat(file.name));
+                const childDestinationPath = destination.concat(file.name);
                 childSourceFile.copyTo(childDestinationPath);
             }
         }
     }
-
-    public toTextFile(): TextFile {
-        return new TextFile(this.path);
-    }
 }
 
-class TextFile extends File {
+export class TextFile extends File {
     public constructor(path: Path) {
         super(path);
     }
@@ -140,7 +138,56 @@ class TextFile extends File {
         return fs.readFileSync(this.path.toString(), { encoding }).split('\n');
     }
 
-    public write(contents: string[], options: WriteFileOptions) {
-        fs.writeFileSync(this.path.toString(), contents.join('\n'), options);
+    public write(contents: string[], encoding: BufferEncoding) {
+        fs.writeFileSync(this.path.toString(), contents.join('\n'), { encoding });
+    }
+
+    public fromFile(file: File): TextFile {
+        return new TextFile(file.getPath());
+    }
+}
+
+export namespace minecraftAddonDevelopment {
+    export const sharedGamesComMojang: Path = Path.absolute("C:\\Users\\wakab\\AppData\\Roaming\\Minecraft Bedrock\\Users\\Shared\\games\\com.mojang");
+
+    export const developmentBehaviorPacks: Path = sharedGamesComMojang.concat("development_behavior_packs");
+
+    export const developmentResourcePacks: Path = sharedGamesComMojang.concat("development_resource_packs");
+
+    export interface Deployment {
+        readonly behavior?: string;
+        readonly resource?: string;
+        readonly importMeta: ImportMeta;
+    }
+
+    export function deployToDevelopmentDirectories(deployment: Deployment) {
+        const rpl = RelativePathLoader.ofCurrentDirectory(deployment.importMeta);
+
+        function __deploy__(src: Path, dest: Path): void {
+            const srcFile = src.toFile();
+
+            if (!srcFile.exists()) {
+                throw new Error();
+            }
+
+            if (srcFile.isFile()) {
+                throw new Error();
+            }
+
+            dest.toFile().delete();
+            src.toFile().copyTo(dest);
+        }
+
+        if (deployment.behavior !== undefined) {
+            const dest = developmentBehaviorPacks.concat(deployment.behavior);
+            const src = rpl.relative(deployment.behavior);
+            __deploy__(src, dest);
+        }
+
+        if (deployment.resource !== undefined) {
+            const dest = developmentResourcePacks.concat(deployment.resource);
+            const src = rpl.relative(deployment.resource);
+            __deploy__(src, dest);
+        }
     }
 }

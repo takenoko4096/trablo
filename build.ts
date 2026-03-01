@@ -1,9 +1,8 @@
-import bun from "bun"
-import { Path, RelativePathLoader } from "./FileSystem";
+import { minecraftAddonDevelopment } from "./FileSystem";
 
 console.log("build start");
 
-const output = await bun.build({
+const output = await Bun.build({
     entrypoints: [
         "./src/index.ts"
     ],
@@ -25,21 +24,10 @@ const output = await bun.build({
     minify: true
 });
 
-const rpl = RelativePathLoader.ofCurrentDirectory(import.meta);
-
-const comMojang = Path.absolute("C:\\Users\\wakab\\AppData\\Roaming\\Minecraft Bedrock\\Users\\Shared\\games\\com.mojang");
-const destB = comMojang.chain("development_behavior_packs/trablo_b");
-const destR = comMojang.chain("development_resource_packs/trablo_r");
-
-const fromB = rpl.relative("trablo_b").toFile();
-const fromR = rpl.relative("trablo_r").toFile();
-
-destB.toFile().delete();
-destR.toFile().delete();
-
-fromB.copyTo(destB);
-fromR.copyTo(destR);
+minecraftAddonDevelopment.deployToDevelopmentDirectories({
+    behavior: "trablo_b",
+    resource: "trablo_r",
+    importMeta: import.meta
+});
 
 console.log("build finished: " + (output.success ? "successful" : "failure"));
-
-console.log(rpl.relative("bun.lock").toFile().toTextFile().read("utf-8"));
