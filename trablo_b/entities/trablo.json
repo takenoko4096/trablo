@@ -125,9 +125,6 @@
                 "remove": {
                     "component_groups": ["impulse", "repeat"]
                 }
-            },
-            "minecraft:entity_spawned": {
-                "trigger": "trablo:toggle_ai"
             }
         }
     }

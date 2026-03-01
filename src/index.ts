@@ -9,3 +9,8 @@ if (world.scoreboard.getObjective(OBJECTIVE) === undefined) {
 }
 
 console.log("Script from addon 'trablo' has been successfully loaded.");
+
+// minecraft:entity_spawned は上書きされうる
+world.afterEvents.entitySpawn.subscribe(event => {
+    event.entity.triggerEvent("trablo:toggle_ai");
+});

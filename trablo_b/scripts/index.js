@@ -1,1 +1,1 @@
-import{system as a,world as o}from"@minecraft/server";var e="trablo:variant";await a.waitTicks(1);if(o.scoreboard.getObjective(e)===void 0)o.scoreboard.addObjective(e);console.log("Script from addon 'trablo' has been successfully loaded.");
+import{system as j,world as b}from"@minecraft/server";var g="trablo:variant";await j.waitTicks(1);if(b.scoreboard.getObjective(g)===void 0)b.scoreboard.addObjective(g);console.log("Script from addon 'trablo' has been successfully loaded.");b.afterEvents.entitySpawn.subscribe((h)=>{h.entity.triggerEvent("trablo:toggle_ai")});
