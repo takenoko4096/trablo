@@ -2,8 +2,8 @@
     "compilerOptions": {
         "allowJs": false,
         "checkJs": false,
-        "module": "es2022",
-        "target": "es2024",
+        "module": "ES2022",
+        "target": "ES2024",
         "moduleResolution": "bundler",
         "esModuleInterop": true,
         "declaration": true,
