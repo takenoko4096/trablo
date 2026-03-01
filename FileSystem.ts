@@ -1,5 +1,25 @@
-import fs from "node:fs";
+import fs, { WriteFileOptions } from "node:fs";
 import path from "node:path";
+
+export class RelativePathLoader {
+    private readonly root: Path;
+
+    private constructor(root: Path) {
+        if (!new File(root).isDirectory()) {
+            throw new Error();
+        }
+
+        this.root = root;
+    }
+
+    public relative(string: string): Path {
+        return this.root.chain(string);
+    }
+
+    public static ofCurrentDirectory(importMeta: ImportMeta): RelativePathLoader {
+        return new RelativePathLoader(Path.absolute(importMeta.dir));
+    }
+}
 
 export class Path {
     private readonly path: string;
@@ -27,15 +47,15 @@ export class Path {
         return new Path(path.join(this.toString(), ...strings));
     }
 
+    public toFile(): File {
+        return new File(this);
+    }
+
     public toString(): string {
         return this.path;
     }
 
-    public isAbsolute(): boolean {
-        return path.isAbsolute(this.toString());
-    }
-
-    public static parseAbsolute(string: string): Path {
+    public static absolute(string: string): Path {
         return new Path(string);
     }
 
@@ -43,7 +63,7 @@ export class Path {
 }
 
 export class File {
-    private readonly path: Path;
+    protected readonly path: Path;
 
     public constructor(path: Path) {
         this.path = path;
@@ -72,13 +92,12 @@ export class File {
         }
     }
 
-    public readLinesUTF8(): string[] {
-        return fs.readFileSync(this.path.toString(), { encoding: "utf-8" }).split("\r\n");
-    }
-
     public delete() {
         if (this.exists()) {
-            fs.rmSync(this.path.toString());
+            fs.rmSync(this.path.toString(), {
+                recursive: true,
+                force: true
+            });
         }
     }
 
@@ -105,5 +124,23 @@ export class File {
                 childSourceFile.copyTo(childDestinationPath);
             }
         }
+    }
+
+    public toTextFile(): TextFile {
+        return new TextFile(this.path);
+    }
+}
+
+class TextFile extends File {
+    public constructor(path: Path) {
+        super(path);
+    }
+
+    public read(encoding: BufferEncoding): string[] {
+        return fs.readFileSync(this.path.toString(), { encoding }).split('\n');
+    }
+
+    public write(contents: string[], options: WriteFileOptions) {
+        fs.writeFileSync(this.path.toString(), contents.join('\n'), options);
     }
 }

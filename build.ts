@@ -1,5 +1,5 @@
 import bun from "bun"
-import { File, Path } from "./FileSystem";
+import { Path, RelativePathLoader } from "./FileSystem";
 
 console.log("build start");
 
@@ -25,14 +25,21 @@ const output = await bun.build({
     minify: true
 });
 
-const comMojang = Path.parseAbsolute("C:\\Users\\wakab\\AppData\\Roaming\\Minecraft Bedrock\\Users\\Shared\\games\\com.mojang");
-const devB = comMojang.chain("development_behavior_packs/trablo_b");
-const devR = comMojang.chain("development_resource_packs/trablo_r");
+const rpl = RelativePathLoader.ofCurrentDirectory(import.meta);
 
-const fromB = new File(Path.parseAbsolute(__dirname + "/trablo_b"));
-const fromR = new File(Path.parseAbsolute(__dirname + "/trablo_r"));
+const comMojang = Path.absolute("C:\\Users\\wakab\\AppData\\Roaming\\Minecraft Bedrock\\Users\\Shared\\games\\com.mojang");
+const destB = comMojang.chain("development_behavior_packs/trablo_b");
+const destR = comMojang.chain("development_resource_packs/trablo_r");
 
-fromB.copyTo(devB);
-fromR.copyTo(devR);
+const fromB = rpl.relative("trablo_b").toFile();
+const fromR = rpl.relative("trablo_r").toFile();
+
+destB.toFile().delete();
+destR.toFile().delete();
+
+fromB.copyTo(destB);
+fromR.copyTo(destR);
 
 console.log("build finished: " + (output.success ? "successful" : "failure"));
+
+console.log(rpl.relative("bun.lock").toFile().toTextFile().read("utf-8"));
