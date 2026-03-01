@@ -1,3 +1,5 @@
 *.mcaddon
 
 node_modules/
+
+FileSystem.ts
